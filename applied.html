@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database</title>
+    <link rel="stylesheet" href="commonStyles.css" />
+  </head>
+
+  <body>
+    <div id="links">
+      <div><a href="index.html">Home</a></div>
+      <div><a href="applied.html">Applied Jobs</a></div>
+      <div><a href="bookmark.html">Bookmarks</a></div>
+    </div>
+
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Job applied</th>
+            <th>Salary expected</th>
+            <th>Add to bookmark</th>
+          </tr>
+        </thead>
+        <tbody id="body">
+          <!-- Append your output to tbody -->
+        </tbody>
+      </table>
+    </main>
+  </body>
+  <script>
+    //you need to code here
+    var jobArr = JSON.parse(localStorage.getItem("jobList"))
+    displayData(jobArr);
+
+    var bookmarkArr =  JSON.parse(localStorage.getItem("bookmarks")) || [];
+
+  function displayData(data) {
+    
+    data.forEach(function (ele){
+
+      var big = document.createElement("tr");
+  
+      var th1 = document.createElement("td");
+      th1.innerText = ele.personName;
+  
+      var th2 = document.createElement("td");
+      th2.innerText = ele.personEmail;
+  
+      var th3 = document.createElement("td");
+      th3.innerText = ele.personRole;
+  
+      var th4 = document.createElement("td");
+      th4.innerText = ele.personSalary;
+  
+      var th5 = document.createElement("td");
+      th5.innerText = "Bookmark";
+      th5.style.color = "royalblue"
+      th5.style.cursor = "pointer"
+      
+      th5.addEventListener("click", function(){
+        bookmarkFun(ele)
+      });
+  
+      big.append(th1,th2,th3,th4,th5);
+  
+      document.querySelector("tbody").append(big);
+
+    });
+  }
+
+  function bookmarkFun(ele){
+    bookmarkArr.push(ele);
+    localStorage.setItem("bookmarks",JSON.stringify(bookmarkArr));
+    window.location.href = "bookmark.html";
+  }
+  </script>
+</html>
